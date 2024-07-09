@@ -1,0 +1,66 @@
+/* General Styles */
+body {
+    transition: color 0.5s, background-color 0.5s;
+}
+
+.navbar {
+    background-color: transparent !important;
+    transition: color 0.5s, background-color 0.5s;
+}
+
+.navbar a {
+    color: inherit !important;
+    transition: color 0.5s;
+}
+
+.navbar-brand {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: inherit;
+    transition: color 0.5s, transform 0.3s;
+}
+
+.navbar-brand:hover {
+    color: #ff6347; /* Change to your preferred hover color */
+    transform: scale(1.1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Adds a glowing effect */
+}
+
+.nav-link {
+    font-family: 'Segoe UI Semibold', Tahoma, Geneva, Verdana, sans-serif;
+    transition: color 0.5s;
+}
+
+/* Light Theme Styles */
+[data-bs-theme='light'] {
+    color: #000;
+}
+
+[data-bs-theme='light'] .navbar,
+[data-bs-theme='light'] .navbar-brand,
+[data-bs-theme='light'] .navbar a,
+[data-bs-theme='light'] .toggle-btn {
+    color: #000 !important;
+}
+
+/* Dark Theme Styles */
+[data-bs-theme='dark'] {
+    color: #fff;
+}
+
+[data-bs-theme='dark'] .navbar,
+[data-bs-theme='dark'] .navbar-brand,
+[data-bs-theme='dark'] .navbar a,
+[data-bs-theme='dark'] .toggle-btn {
+    color: #fff !important;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: scale(1.01);
+    transition: all 0.3s;
+}
