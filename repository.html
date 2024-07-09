@@ -13,7 +13,7 @@
 
 <body data-bs-theme="light">
     <div class="background"></div>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-light fixed-top">
         <div class="container-fluid ps-5 pe-5">
             <a class="navbar-brand" href="#">Vinh Veer</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -24,7 +24,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/">Home</a>
+                        <a class="nav-link active-item" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="about.html">About me</a>
@@ -33,7 +33,7 @@
                         <a class="nav-link" aria-disabled="true" href="repository.html">Repository</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-disabled="true" href="developers.html">Developers</a>
+                        <a class="nav-link" aria-disabled="true" href="developers.html">Developers</a>
                     </li>
                 </ul>
                 <a href="https://zalo.me/0367576135" class="btn">
@@ -63,42 +63,12 @@
     </nav>
 
     <div class="profile-header container-fluid ps-5 pe-5 mt-5">
-        <h3>Resources for Developers teams</h3>
-        <p>Here are some resources for developers teams</p>
+        <h3>Repositories</h3>
+        <p>Here are the repositories from the GitHub account vinhveer</p>
     </div>
 
-    <div class="container-fluid ps-5 pe-5 mt-5">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Recordings</h5>
-                <p class="card-text">Recordings of the previous meetings</p>
-                <a href="https://drive.google.com/drive/folders/1k3rdHoQy2oA55aNcMsikoDH2V70NYtRR?usp=sharing"
-                    class="btn btn-success">View</a>
-            </div>
-        </div>
-        <div class="card mt-3">
-            <div class="card-body">
-                <h5 class="card-title">Join meetings</h5>
-                <p class="card-text">Google Meet ID: cxy-vabk-agy</p>
-                <a href="https://meet.google.com/cxy-vabk-agy" class="btn btn-success">Join now</a>
-            </div>
-        </div>
-        <div class="card mt-3">
-            <div class="card-body">
-                <h5 class="card-title">Lectures</h5>
-                <p class="card-text">Lectures for developers teams (Upload in notion)</p>
-                <a href="https://vinhveerntu.notion.site/9ce52ee135e447318ee440e8e73b1b4c?v=26b471fda64943c3b80492442239dc1c&pvs=4"
-                    class="btn btn-success">See more</a>
-            </div>
-        </div>
-        <div class="card mt-3">
-            <div class="card-body">
-                <h5 class="card-title">Roadmap</h5>
-                <p class="card-text">Upload in Google Sheet</p>
-                <a href="https://docs.google.com/spreadsheets/d/1Nfqmcec5tapyOvBehejdelAPnqNIcVoq6FJS7ee8fqM/edit?usp=sharing"
-                    class="btn btn-success">Join now</a>
-            </div>
-        </div>
+    <div class="container-fluid ps-5 pe-5 mt-5" id="repos-container">
+        <!-- Repositories will be dynamically added here -->
     </div>
 
     <div class="footer">
@@ -130,6 +100,38 @@
                 toggleBtn.classList.replace('fa-sun', 'fa-moon');
             }
         });
+
+        async function fetchRepos() {
+            const response = await fetch('https://api.github.com/users/vinhveer/repos');
+            const repos = await response.json();
+
+            const reposContainer = document.getElementById('repos-container');
+            reposContainer.innerHTML = '';
+
+            repos.forEach(repo => {
+                const card = document.createElement('div');
+                card.classList.add('card', 'd-flex', 'flex-row', 'align-items-center', 'mt-3', 'p-2');
+
+                card.innerHTML = `
+                    <div class="me-3 ms-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
+                            class="bi bi-github" viewBox="0 0 16 16">
+                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">${repo.name}</h5>
+                        <p class="card-text">${repo.description || 'No description available'}</p>
+                        <a href="${repo.html_url}" class="btn btn-success" target="_blank">View Repository</a>
+                    </div>
+                `;
+
+                reposContainer.appendChild(card);
+            });
+
+        }
+
+        fetchRepos();
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
