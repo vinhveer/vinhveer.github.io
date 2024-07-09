@@ -22,7 +22,6 @@ body {
 
 .navbar-brand:hover {
     color: #ff6347; /* Change to your preferred hover color */
-    transform: scale(1.1);
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Adds a glowing effect */
 }
 
