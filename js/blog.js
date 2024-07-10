@@ -14,7 +14,7 @@ async function fetchBlogs() {
 
 async function fetchMarkdownInfo(file) {
     try {
-        const response = await fetch(`https://vinhveer.github.io/${file}`);
+        const response = await fetch(`/${file}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -66,7 +66,7 @@ function createBlogCard(info, blogUrl) {
     card.className = 'card d-flex flex-row align-items-center mt-3 p-2';
 
     const img = document.createElement('img');
-    img.src = info.iconDir || 'path/to/default/icon.png';
+    img.src = info.iconDir || 'icons/lecture.png';
     img.width = 90;
     img.className = 'ms-3 me-3';
 
