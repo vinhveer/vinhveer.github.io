@@ -1,12 +1,11 @@
 async function fetchBlogs() {
     try {
-        const response = await fetch('./blogs/');
-        const text = await response.text();
-        const parser = new DOMParser();
-        const htmlDoc = parser.parseFromString(text, 'text/html');
-        const files = [...htmlDoc.querySelectorAll('a')].map(a => a.href).filter(href => href.endsWith('.md'));
-
-        return files;
+        const response = await fetch('../blogs.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.blogs;
     } catch (error) {
         console.error('Error fetching blogs:', error.message, error.stack);
         return [];
@@ -15,7 +14,10 @@ async function fetchBlogs() {
 
 async function fetchMarkdownInfo(file) {
     try {
-        const response = await fetch(file);
+        const response = await fetch(`https://vinhveer.github.io/${file}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const markdown = await response.text();
         const lines = markdown.split('\n');
         const info = {};
@@ -64,7 +66,7 @@ function createBlogCard(info, blogUrl) {
     card.className = 'card d-flex flex-row align-items-center mt-3 p-2';
 
     const img = document.createElement('img');
-    img.src = info.iconDir || './icons/lecture.png';
+    img.src = info.iconDir || 'path/to/default/icon.png';
     img.width = 90;
     img.className = 'ms-3 me-3';
 
@@ -129,7 +131,24 @@ function debounce(func, delay) {
     };
 }
 
-const searchInput = document.getElementById('search-input');
-searchInput.addEventListener('input', debounce(searchBlogs, 200));
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', debounce(searchBlogs, 200));
+    } else {
+        console.error('Error: search-input not found');
+    }
 
-document.addEventListener('DOMContentLoaded', displayBlogs);
+    displayBlogs();
+});
+
+function updateTheme() {
+    const someElement = document.getElementById('some-element-id');
+    if (someElement) {
+        someElement.classList.add('new-class');
+    } else {
+        console.error('Error: some-element-id not found');
+    }
+}
+
+updateTheme();
