@@ -1,7 +1,6 @@
-// Fetch tất cả các tệp Markdown từ thư mục 'blogs'
 async function fetchBlogs() {
     try {
-        const response = await fetch('blogs/');
+        const response = await fetch('./blogs/');
         const text = await response.text();
         const parser = new DOMParser();
         const htmlDoc = parser.parseFromString(text, 'text/html');
@@ -9,12 +8,11 @@ async function fetchBlogs() {
 
         return files;
     } catch (error) {
-        console.error('Error fetching blogs:', error);
+        console.error('Error fetching blogs:', error.message, error.stack);
         return [];
     }
 }
 
-// Lấy thông tin từ phần đầu của tệp Markdown
 async function fetchMarkdownInfo(file) {
     try {
         const response = await fetch(file);
@@ -34,15 +32,13 @@ async function fetchMarkdownInfo(file) {
 
         return info;
     } catch (error) {
-        console.error('Error fetching Markdown file:', error);
+        console.error('Error fetching Markdown file:', error.message, error.stack);
         return null;
     }
 }
 
-// Lưu trữ các thẻ card ban đầu
 let initialCards = [];
 
-// Hiển thị các blog dưới dạng thẻ ban đầu
 async function displayBlogs() {
     const blogsContainer = document.getElementById('blogs-container');
     if (!blogsContainer) {
@@ -58,18 +54,17 @@ async function displayBlogs() {
         if (info) {
             const card = createBlogCard(info, blog);
             blogsContainer.appendChild(card);
-            initialCards.push(card); // Lưu thẻ card vào danh sách ban đầu
+            initialCards.push(card);
         }
     }
 }
 
-// Tạo thẻ card cho mỗi blog
 function createBlogCard(info, blogUrl) {
     const card = document.createElement('div');
     card.className = 'card d-flex flex-row align-items-center mt-3 p-2';
 
     const img = document.createElement('img');
-    img.src = info.iconDir || 'path/to/default/icon.png';
+    img.src = info.iconDir || './icons/lecture.png';
     img.width = 90;
     img.className = 'ms-3 me-3';
 
@@ -98,25 +93,22 @@ function createBlogCard(info, blogUrl) {
     return card;
 }
 
-// Tìm kiếm blog
 function searchBlogs() {
     const searchInput = document.getElementById('search-input');
     const searchText = searchInput.value.trim().toLowerCase();
-    console.log(searchText)
+    console.log(searchText);
 
-    // Duyệt qua danh sách thẻ card ban đầu để hiển thị hoặc ẩn dựa trên kết quả tìm kiếm
     initialCards.forEach(card => {
         const title = card.querySelector('.card-title').innerText.toLowerCase();
         const description = card.querySelector('.card-text').innerText.toLowerCase();
 
         if (title.includes(searchText) || description.includes(searchText)) {
-            card.classList.remove('d-none'); // Hiển thị thẻ card nếu chứa từ khóa tìm kiếm
+            card.classList.remove('d-none');
         } else {
-            card.classList.add('d-none'); // Ẩn thẻ card nếu không chứa từ khóa tìm kiếm
+            card.classList.add('d-none');
         }
     });
 
-    // Hiển thị thông báo nếu không tìm thấy kết quả
     const noResults = document.getElementById('no-results');
     if (initialCards.every(card => card.classList.contains('d-none'))) {
         noResults.classList.remove('d-none');
@@ -125,7 +117,6 @@ function searchBlogs() {
     }
 }
 
-// Tạo hàm debounce để trì hoãn việc gọi hàm searchBlogs()
 function debounce(func, delay) {
     let timer;
     return function () {
@@ -138,9 +129,7 @@ function debounce(func, delay) {
     };
 }
 
-// Gán sự kiện tìm kiếm cho input search
 const searchInput = document.getElementById('search-input');
-searchInput.addEventListener('input', debounce(searchBlogs, 200)); // Áp dụng debounce sau 1s
+searchInput.addEventListener('input', debounce(searchBlogs, 200));
 
-// Wait for the DOM content to load before executing
 document.addEventListener('DOMContentLoaded', displayBlogs);
