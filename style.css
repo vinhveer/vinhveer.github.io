@@ -26,8 +26,15 @@ body {
 }
 
 .nav-link {
-    font-family: 'Segoe UI Semibold', Tahoma, Geneva, Verdana, sans-serif;
     transition: color 0.5s;
+}
+
+.nav-link:hover {
+    font-weight: 700;
+}
+
+.active-item {
+    font-weight: 700;
 }
 
 /* Light Theme Styles */
