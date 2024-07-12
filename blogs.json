@@ -2,7 +2,8 @@
     "blogs": [
       "blogs/install_graphicsh_vscode.md",
       "blogs/install_graphicsh_devC.md",
-      "blogs/office365.md"
+      "blogs/office365.md",
+      "blogs/wsl.md"
     ]
   }
   
