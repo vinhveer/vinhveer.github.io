@@ -1,4 +1,3 @@
-/* General Styles */
 body {
     transition: color 0.5s, background-color 0.5s;
     margin-top: 100px;
@@ -9,7 +8,6 @@ body {
 }
 
 .navbar a {
-    color: inherit !important;
     transition: color 0.5s;
 }
 
@@ -20,17 +18,14 @@ body {
     transition: color 0.5s, transform 0.3s;
 }
 
-.navbar-brand:hover {
-    color: #ff6347; /* Change to your preferred hover color */
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Adds a glowing effect */
-}
-
 .nav-link {
     transition: color 0.5s;
+    margin-right: 10px;
 }
 
-.nav-link:hover {
-    font-weight: 700;
+.nav-link i {
+    margin-right: 5px;
+    font-size: 20px;
 }
 
 .active-item {
@@ -72,7 +67,6 @@ body {
 }
 
 .icons {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     transition: color 0.5s;
 }
-
