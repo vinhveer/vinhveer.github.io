@@ -23,7 +23,7 @@ body {
 
 .nav-link {
     transition: color 0.5s;
-    margin-right: 10px;
+    margin-left: 10px;
 }
 
  i {
