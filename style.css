@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 body {
     transition: color 0.5s, background-color 0.5s;
     margin-top: 100px;
+    font-family: 'Be Vietnam Pro', sans-serif;
 }
 
 .navbar {
@@ -23,13 +26,26 @@ body {
     margin-right: 10px;
 }
 
-.nav-link i {
+ i {
     margin-right: 5px;
-    font-size: 20px;
+}
+
+input {
+    padding: 30px;
+}
+
+.nav-link:hover span {
+    border-bottom: 4px solid #007bff;
+    padding-bottom: 2px;
 }
 
 .active-item {
-    font-weight: 700;
+    font-weight: 600;
+}
+
+.active-item span {
+    border-bottom: 4px solid #007bff;
+    padding-bottom: 2px;
 }
 
 /* Light Theme Styles */
