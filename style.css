@@ -19,7 +19,12 @@ body {
     font-weight: bold;
     color: inherit;
     transition: color 0.5s, transform 0.3s;
-    margin-left: 20px;
+}
+
+@media (min-width: 768px) {
+    .navbar-brand {
+        margin-left: 20px;
+    }
 }
 
 .nav-link {
