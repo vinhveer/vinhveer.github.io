@@ -12,7 +12,6 @@
 </head>
 
 <body data-bs-theme="light">
-    <div class="background"></div>
     <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-light fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Vinh Veer</a>
@@ -24,12 +23,12 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto me-3 mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/">
+                        <a class="nav-link active-item" aria-current="page" href="/">
                             <span>Trang chủ</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active-item" aria-disabled="true" href="blog.html">
+                        <a class="nav-link" aria-disabled="true" href="blog.html">
                             <span>Bài đăng</span>
                         </a>
                     </li>
@@ -49,18 +48,69 @@
     </nav>
 
     <div class="container mt-5">
-        <h5 class="display-5">Tất cả bài đăng</h5>
-        <form class="d-flex mt-4">
-            <input id="search-input" class="form-control me-2" placeholder="Nhập vào đây để tìm kiếm">
-        </form>
+        <h1>Calculate your score</h1>
+        <p>Enter your score and see the result</p>
     </div>
 
-    <div id="blogs-container" class="container mt-5">
-        <!-- Blog cards will be inserted here by JavaScript -->
+    <div class="container mt-2 card">
+        <div class="table">
+            <div class="thead">
+                <div class="th">Điểm trung bình hệ 10: <span id="average-score-10"></span></div>
+                <div class="th">Điểm trung bình hệ 4: <span id="average-score-4"></span></div>
+            </div>
+        </div>
     </div>
 
-    <div id="no-results" class="container mt-5 d-none">
-        <h6>Không tìm thấy kết quả</h6>
+    <div class="container mt-4">
+        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#courseModal">Thêm môn học - điểm
+            số</button>
+    </div>
+
+    <div class="container mt-4">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tên học phần</th>
+                        <th>Số tín chỉ</th>
+                        <th>Số điểm</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="courseTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="courseModal" tabindex="-1" aria-labelledby="courseModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="courseModalLabel">Add/Edit Course</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="courseForm">
+                        <div class="mb-3">
+                            <label for="courseName" class="form-label">Tên học phần</label>
+                            <input type="text" class="form-control" id="courseName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="credits" class="form-label">Số tín chỉ</label>
+                            <input type="number" class="form-control" id="credits" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="score" class="form-label">Số điểm</label>
+                            <input type="number" step="0.1" class="form-control" id="score" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="footer">
@@ -69,7 +119,7 @@
         </div>
     </div>
 
-    <script src="js/blog.js"></script>
+    <script src="js/calc.js"></script>
 
     <script>
         const toggleBtn = document.getElementById('toggleMode');

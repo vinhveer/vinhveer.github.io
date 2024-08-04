@@ -1,32 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Vinh Veer</title>
-    <!-- Bao gồm Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Bao gồm GitHub Markdown CSS -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <style>
-        .markdown-body {
-            box-sizing: border-box;
-            padding: 50px;
-            z-index: 100;
-        }
-        body {
-            margin-top: 30px;
-        }
-    </style>
 </head>
 
 <body data-bs-theme="light">
-    <div class="background"></div>
     <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-light fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Vinh Veer</a>
@@ -44,7 +29,17 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-disabled="true" href="blog.html">
-                            <i class="fa-solid fa-arrow-left-long"></i> <span>Các bài đăng khác</span>
+                            <span>Bài đăng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">
+                            <span>Về tôi</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active-item ">
+                        <a class="nav-link" href="feature.html">
+                            <span>Tính năng khác</span>
                         </a>
                     </li>
                 </ul>
@@ -52,63 +47,24 @@
         </div>
     </nav>
 
-    <main class="markdown-body">
-        <div id="content" class="container"></div>
-    </main>
+    <div class="container mt-5">
+        <h1>Feature</h1>
+    </div>
+
+    <div class="container mt-4">
+        <a class="card" style="width: 18rem;" href="calc-score.html">
+            <div class="card-body">
+                <h5 class="card-title">Tính điểm</h5>
+                <p class="card-text">Tính điểm trung bình học kỳ</p>
+            </div>
+        </a>
+    </div>
 
     <div class="footer">
         <div class="container mt-5 mb-5">
-            <p>&copy; 2024 Vinh Veer. All rights reserved. - <a href="/blog.html">Về trang blogs</a></p>
+            <p>&copy; 2024 Vinh Veer. All rights reserved.</p>
         </div>
     </div>
-
-    <!-- Bao gồm Showdown và highlight.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-    <script>
-        // Lấy giá trị của tham số 'file' từ URL
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
-
-        // Lấy file từ URL và fetch nội dung của nó
-        const file = getQueryParam('file');
-        if (file) {
-            fetchMarkdown(file);
-        } else {
-            document.getElementById('content').innerHTML = '<p>Error: No file specified</p>';
-        }
-
-        async function fetchMarkdown(file) {
-            try {
-                const response = await fetch(file);
-                const markdown = await response.text();
-
-                // Tìm vị trí của dòng bắt đầu của nội dung thực
-                const startIndex = markdown.indexOf('# ');
-
-                // Nếu không tìm thấy dấu #, có thể là tệp không đúng định dạng, xử lý lỗi
-                if (startIndex === -1) {
-                    throw new Error('Invalid Markdown format: Missing main content.');
-                }
-
-                // Cắt bỏ các dòng meta-data
-                const mainContent = markdown.substring(startIndex);
-
-                // Chuyển đổi Markdown thành HTML
-                const converter = new showdown.Converter();
-                const htmlContent = converter.makeHtml(mainContent);
-                document.getElementById('content').innerHTML = htmlContent;
-            } catch (error) {
-                console.error('Error fetching Markdown file:', error);
-            }
-        }
-    </script>
-
 
     <script>
         const toggleBtn = document.getElementById('toggleMode');
@@ -141,6 +97,10 @@
         // Lắng nghe sự thay đổi của chế độ hệ thống
         window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', updateTheme);
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

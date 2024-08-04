@@ -62,8 +62,9 @@ async function displayBlogs() {
 }
 
 function createBlogCard(info, blogUrl) {
-    const card = document.createElement('div');
+    const card = document.createElement('a');
     card.className = 'card d-flex flex-row align-items-center mt-3 p-2';
+    card.href = `view.html?file=${encodeURIComponent(blogUrl)}`;
 
     const img = document.createElement('img');
     img.src = info.iconDir || 'icons/lecture.png';
@@ -81,14 +82,8 @@ function createBlogCard(info, blogUrl) {
     cardText.className = 'card-text';
     cardText.innerText = info.description || 'No description available';
 
-    const cardLink = document.createElement('a');
-    cardLink.href = `view.html?file=${encodeURIComponent(blogUrl)}`;
-    cardLink.className = 'btn btn-success';
-    cardLink.innerText = 'View';
-
     cardBody.appendChild(cardTitle);
     cardBody.appendChild(cardText);
-    cardBody.appendChild(cardLink);
     card.appendChild(img);
     card.appendChild(cardBody);
 

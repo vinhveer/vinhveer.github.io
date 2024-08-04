@@ -92,3 +92,8 @@ input {
     font-size: 1.2rem;
     transition: color 0.5s;
 }
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
