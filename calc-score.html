@@ -48,15 +48,15 @@
     </nav>
 
     <div class="container mt-5">
-        <h1>Calculate your score</h1>
-        <p>Enter your score and see the result</p>
+        <h1>Tính điểm trung bình môn</h1>
+        <p>Chọn nút thêm môn học - điểm số để thêm, sau đó xem kết quả</p>
     </div>
 
-    <div class="container mt-2 card">
-        <div class="table">
-            <div class="thead">
-                <div class="th">Điểm trung bình hệ 10: <span id="average-score-10"></span></div>
-                <div class="th">Điểm trung bình hệ 4: <span id="average-score-4"></span></div>
+    <div class="container mt-2">
+        <div class="card">
+            <div class="card-body">
+                <div>Điểm trung bình hệ 10 - <span id="average-score-10"></span></div>
+                <div>Điểm trung bình hệ 4 - <span id="average-score-4"></span></div>
             </div>
         </div>
     </div>
@@ -75,6 +75,7 @@
                         <th>Tên học phần</th>
                         <th>Số tín chỉ</th>
                         <th>Số điểm</th>
+                        <th>Điểm chữ</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -94,6 +95,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="courseForm">
+                        <input type="hidden" id="courseIndex">
                         <div class="mb-3">
                             <label for="courseName" class="form-label">Tên học phần</label>
                             <input type="text" class="form-control" id="courseName" required>

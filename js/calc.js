@@ -4,6 +4,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const averageScore4 = document.getElementById('average-score-4');
     const courseTableBody = document.getElementById('courseTableBody');
     const courseModal = new bootstrap.Modal(document.getElementById('courseModal'));
+    const toggleBtn = document.getElementById('toggleMode');
+    const body = document.body;
+    const navbar = document.querySelector('.navbar');
+    const links = document.querySelectorAll('.navbar a, .btn-outline-success');
 
     let courses = [];
     let totalCredits = 0;
@@ -11,13 +15,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     courseForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        
+
         const courseName = document.getElementById('courseName').value;
         const credits = parseFloat(document.getElementById('credits').value);
         const score = parseFloat(document.getElementById('score').value);
-        const isAccumulated = document.getElementById('isAccumulated').checked;
 
-        const newCourse = { courseName, credits, score, isAccumulated };
+        const newCourse = { courseName, credits, score };
 
         if (editingIndex >= 0) {
             courses[editingIndex] = newCourse;
@@ -41,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td>${course.courseName}</td>
                 <td>${course.credits}</td>
                 <td>${course.score}</td>
+                <td>${convertScoreToLetter(course.score)}</td>
                 <td>
                     <button class="btn btn-sm btn-warning" onclick="editCourse(${index})">Edit</button>
                     <button class="btn btn-sm btn-danger" onclick="deleteCourse(${index})">Delete</button>
@@ -68,24 +72,25 @@ document.addEventListener('DOMContentLoaded', function () {
         averageScore4.textContent = average4;
     }
 
-    function convertScoreTo4Scale(score) {
-        if (score >= 9.0) return 4.0;
-        if (score >= 8.5) return 3.7;
-        if (score >= 8.0) return 3.5;
-        if (score >= 7.0) return 3.0;
-        if (score >= 6.5) return 2.5;
-        if (score >= 5.5) return 2.0;
-        if (score >= 5.0) return 1.5;
-        if (score >= 4.0) return 1.0;
-        return 0.0;
+    function convertScoreToLetter(score) {
+        if (score >= 8.5) return 'A';         // 4.0
+        if (score >= 8.0) return 'B+';        // 3.5
+        if (score >= 7.0) return 'B';         // 3.2
+        if (score >= 6.5) return 'C+';        // 2.5
+        if (score >= 5.5) return 'C';         // 2.0
+        if (score >= 5.0) return 'D+';        // 1.5
+        if (score >= 4.0) return 'D';         // 1.0
+        return 'F';                          // 0.0
     }
+
 
     window.editCourse = function (index) {
         const course = courses[index];
-        document.getElementById('courseName').value = course.courseName;
-        document.getElementById('credits').value = course.credits;
-        document.getElementById('score').value = course.score;
-        document.getElementById('courseIndex').value = index;
+        document.getElementById('courseName').value = course.courseName || '';
+        document.getElementById('credits').value = course.credits || '';
+        document.getElementById('score').value = course.score || '';
+        document.getElementById('courseIndex').value = index || '';
+        document.getElementById('courseModalLabel').textContent = 'Chỉnh sửa điểm';
         editingIndex = index;
         courseModal.show();
     };
@@ -95,4 +100,10 @@ document.addEventListener('DOMContentLoaded', function () {
         updateCourseTable();
         updateAverageScores();
     };
+
+    courseModal._element.addEventListener('hidden.bs.modal', function () {
+        editingIndex = -1;
+        courseForm.reset();
+        document.getElementById('courseModalLabel').textContent = 'Thêm điểm';
+    });
 });
