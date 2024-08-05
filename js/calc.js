@@ -20,6 +20,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const credits = parseFloat(document.getElementById('credits').value);
         const score = parseFloat(document.getElementById('score').value);
 
+        if (isNaN(credits) || isNaN(score) || credits <= 0 || score < 0 || score > 10) {
+            alert('Vui lòng nhập giá trị hợp lệ cho số tín chỉ và điểm.');
+            return;
+        }
+
         const newCourse = { courseName, credits, score };
 
         if (editingIndex >= 0) {
