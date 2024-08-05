@@ -29,28 +29,31 @@ document.addEventListener('DOMContentLoaded', function () {
             courses.push(newCourse);
         }
 
-        updateCourseTable();
+        updateCourseCards();
         updateAverageScores();
         courseForm.reset();
         courseModal.hide();
     });
 
-    function updateCourseTable() {
+    function updateCourseCards() {
         courseTableBody.innerHTML = '';
         courses.forEach((course, index) => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${index + 1}</td>
-                <td>${course.courseName}</td>
-                <td>${course.credits}</td>
-                <td>${course.score}</td>
-                <td>${convertScoreToLetter(course.score)}</td>
-                <td>
-                    <button class="btn btn-sm btn-warning" onclick="editCourse(${index})">Edit</button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteCourse(${index})">Delete</button>
-                </td>
+            const card = document.createElement('div');
+            card.className = 'card mb-3 mt-3';
+            card.innerHTML = `
+                <div class="card-body">
+                    <div class="mb-3 float-end">
+                        <button class="btn btn-outline-warning" onclick="editCourse(${index})"><i class="fa-solid fa-pen-to-square"></i> Chính sửa</button>
+                        <button class="btn btn-outline-danger" onclick="deleteCourse(${index})"><i class="fa-solid fa-trash"></i> Xoá</button>
+                    </div>
+                    <h6 class="card-title">#${index + 1}</h5>
+                    <h4 class="card-title">${course.courseName}</h4>
+                    <p class="card-text"><strong>Số tín chỉ:</strong> ${course.credits} </br>
+                    <strong>Điểm:</strong> ${course.score} </br>
+                    <strong>Điểm chữ:</strong> ${convertScoreToLetter(course.score)}</p>
+                </div>
             `;
-            courseTableBody.appendChild(row);
+            courseTableBody.appendChild(card);
         });
     }
 
@@ -68,21 +71,31 @@ document.addEventListener('DOMContentLoaded', function () {
         const average10 = (totalScore10 / totalCredits).toFixed(2);
         const average4 = (totalScore4 / totalCredits).toFixed(2);
 
-        averageScore10.textContent = average10;
-        averageScore4.textContent = average4;
+        averageScore10.textContent = average10 || '0.00';
+        averageScore4.textContent = average4 || '0.00';
+    }
+
+    function convertScoreTo4Scale(score) {
+        if (score >= 8.5) return 4.0;
+        if (score >= 8.0) return 3.5;
+        if (score >= 7.0) return 3.2;
+        if (score >= 6.5) return 2.5;
+        if (score >= 5.5) return 2.0;
+        if (score >= 5.0) return 1.5;
+        if (score >= 4.0) return 1.0;
+        return 0.0;
     }
 
     function convertScoreToLetter(score) {
-        if (score >= 8.5) return 'A';         // 4.0
-        if (score >= 8.0) return 'B+';        // 3.5
-        if (score >= 7.0) return 'B';         // 3.2
-        if (score >= 6.5) return 'C+';        // 2.5
-        if (score >= 5.5) return 'C';         // 2.0
-        if (score >= 5.0) return 'D+';        // 1.5
-        if (score >= 4.0) return 'D';         // 1.0
-        return 'F';                          // 0.0
+        if (score >= 8.5) return 'A';
+        if (score >= 8.0) return 'B+';
+        if (score >= 7.0) return 'B';
+        if (score >= 6.5) return 'C+';
+        if (score >= 5.5) return 'C';
+        if (score >= 5.0) return 'D+';
+        if (score >= 4.0) return 'D';
+        return 'F';
     }
-
 
     window.editCourse = function (index) {
         const course = courses[index];
@@ -97,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.deleteCourse = function (index) {
         courses.splice(index, 1);
-        updateCourseTable();
+        updateCourseCards();
         updateAverageScores();
     };
 
@@ -106,4 +119,27 @@ document.addEventListener('DOMContentLoaded', function () {
         courseForm.reset();
         document.getElementById('courseModalLabel').textContent = 'Thêm điểm';
     });
+
+    if (toggleBtn) {
+        function updateTheme() {
+            const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+            const newTheme = prefersDarkScheme ? 'dark' : 'light';
+            body.setAttribute('data-bs-theme', newTheme);
+
+            if (newTheme === 'dark') {
+                body.style.color = '#ffffff';
+                navbar.style.color = '#ffffff';
+                links.forEach(link => link.style.color = '#ffffff');
+                toggleBtn.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                body.style.color = '#000000';
+                navbar.style.color = '#000000';
+                links.forEach(link => link.style.color = '#000000');
+                toggleBtn.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+
+        updateTheme();
+        window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', updateTheme);
+    }
 });
