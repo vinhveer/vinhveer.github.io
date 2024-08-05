@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const averageScore10 = document.getElementById('average-score-10');
     const averageScore4 = document.getElementById('average-score-4');
     const courseTableBody = document.getElementById('courseTableBody');
-    const courseModal = new bootstrap.Modal(document.getElementById('courseModal'));
+    const courseModalElement = document.getElementById('courseModal');
+    const courseModal = courseModalElement ? new bootstrap.Modal(courseModalElement) : null;
     const toggleBtn = document.getElementById('toggleMode');
     const body = document.body;
     const navbar = document.querySelector('.navbar');
@@ -13,34 +14,37 @@ document.addEventListener('DOMContentLoaded', function () {
     let totalCredits = 0;
     let editingIndex = -1;
 
-    courseForm.addEventListener('submit', function (e) {
-        e.preventDefault();
+    if (courseForm) {
+        courseForm.addEventListener('submit', function (e) {
+            e.preventDefault();
 
-        const courseName = document.getElementById('courseName').value;
-        const credits = parseFloat(document.getElementById('credits').value);
-        const score = parseFloat(document.getElementById('score').value);
+            const courseName = document.getElementById('courseName').value;
+            const credits = parseFloat(document.getElementById('credits').value);
+            const score = parseFloat(document.getElementById('score').value);
 
-        if (isNaN(credits) || isNaN(score) || credits <= 0 || score < 0 || score > 10) {
-            alert('Vui lòng nhập giá trị hợp lệ cho số tín chỉ và điểm.');
-            return;
-        }
+            if (isNaN(credits) || isNaN(score) || credits <= 0 || score < 0 || score > 10) {
+                alert('Vui lòng nhập giá trị hợp lệ cho số tín chỉ và điểm.');
+                return;
+            }
 
-        const newCourse = { courseName, credits, score };
+            const newCourse = { courseName, credits, score };
 
-        if (editingIndex >= 0) {
-            courses[editingIndex] = newCourse;
-            editingIndex = -1;
-        } else {
-            courses.push(newCourse);
-        }
+            if (editingIndex >= 0) {
+                courses[editingIndex] = newCourse;
+                editingIndex = -1;
+            } else {
+                courses.push(newCourse);
+            }
 
-        updateCourseCards();
-        updateAverageScores();
-        courseForm.reset();
-        courseModal.hide();
-    });
+            updateCourseCards();
+            updateAverageScores();
+            courseForm.reset();
+            if (courseModal) courseModal.hide();
+        });
+    }
 
     function updateCourseCards() {
+        if (!courseTableBody) return;
         courseTableBody.innerHTML = '';
         courses.forEach((course, index) => {
             const card = document.createElement('div');
@@ -48,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
             card.innerHTML = `
                 <div class="card-body">
                     <div class="mb-3 float-end">
-                        <button class="btn btn-outline-warning" onclick="editCourse(${index})"><i class="fa-solid fa-pen-to-square"></i> Chính sửa</button>
+                        <button class="btn btn-outline-warning" onclick="editCourse(${index})"><i class="fa-solid fa-pen-to-square"></i> Chỉnh sửa</button>
                         <button class="btn btn-outline-danger" onclick="deleteCourse(${index})"><i class="fa-solid fa-trash"></i> Xoá</button>
                     </div>
                     <h6 class="card-title">#${index + 1}</h5>
@@ -73,11 +77,8 @@ document.addEventListener('DOMContentLoaded', function () {
             totalCredits += course.credits;
         });
 
-        const average10 = (totalScore10 / totalCredits).toFixed(2);
-        const average4 = (totalScore4 / totalCredits).toFixed(2);
-
-        averageScore10.textContent = average10 || '0.00';
-        averageScore4.textContent = average4 || '0.00';
+        if (averageScore10) averageScore10.textContent = (totalScore10 / totalCredits).toFixed(2) || '0.00';
+        if (averageScore4) averageScore4.textContent = (totalScore4 / totalCredits).toFixed(2) || '0.00';
     }
 
     function convertScoreTo4Scale(score) {
@@ -107,10 +108,9 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('courseName').value = course.courseName || '';
         document.getElementById('credits').value = course.credits || '';
         document.getElementById('score').value = course.score || '';
-        document.getElementById('courseIndex').value = index || '';
         document.getElementById('courseModalLabel').textContent = 'Chỉnh sửa điểm';
         editingIndex = index;
-        courseModal.show();
+        if (courseModal) courseModal.show();
     };
 
     window.deleteCourse = function (index) {
@@ -119,9 +119,11 @@ document.addEventListener('DOMContentLoaded', function () {
         updateAverageScores();
     };
 
-    courseModal._element.addEventListener('hidden.bs.modal', function () {
-        editingIndex = -1;
-        courseForm.reset();
-        document.getElementById('courseModalLabel').textContent = 'Thêm điểm';
-    });
+    if (courseModalElement) {
+        courseModalElement.addEventListener('hidden.bs.modal', function () {
+            editingIndex = -1;
+            if (courseForm) courseForm.reset();
+            document.getElementById('courseModalLabel').textContent = 'Thêm điểm';
+        });
+    }
 });
