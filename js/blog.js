@@ -1,3 +1,14 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', debounce(searchBlogs, 200));
+    } else {
+        console.error('Error: search-input not found');
+    }
+
+    displayBlogs();
+});
+
 async function fetchBlogs() {
     try {
         const response = await fetch('../blogs.json');
@@ -90,14 +101,18 @@ function createBlogCard(info, blogUrl) {
     return card;
 }
 
+function normalizeText(text) {
+    return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '').toLowerCase();
+}
+
 function searchBlogs() {
     const searchInput = document.getElementById('search-input');
-    const searchText = searchInput.value.trim().toLowerCase();
+    const searchText = normalizeText(searchInput.value.trim());
     console.log(searchText);
 
     initialCards.forEach(card => {
-        const title = card.querySelector('.card-title').innerText.toLowerCase();
-        const description = card.querySelector('.card-text').innerText.toLowerCase();
+        const title = normalizeText(card.querySelector('.card-title').innerText);
+        const description = normalizeText(card.querySelector('.card-text').innerText);
 
         if (title.includes(searchText) || description.includes(searchText)) {
             card.classList.remove('d-none');
@@ -125,17 +140,6 @@ function debounce(func, delay) {
         }, delay);
     };
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    const searchInput = document.getElementById('search-input');
-    if (searchInput) {
-        searchInput.addEventListener('input', debounce(searchBlogs, 200));
-    } else {
-        console.error('Error: search-input not found');
-    }
-
-    displayBlogs();
-});
 
 function updateTheme() {
     const someElement = document.getElementById('some-element-id');
