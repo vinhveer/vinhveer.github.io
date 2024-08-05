@@ -119,27 +119,4 @@ document.addEventListener('DOMContentLoaded', function () {
         courseForm.reset();
         document.getElementById('courseModalLabel').textContent = 'Thêm điểm';
     });
-
-    if (toggleBtn) {
-        function updateTheme() {
-            const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-            const newTheme = prefersDarkScheme ? 'dark' : 'light';
-            body.setAttribute('data-bs-theme', newTheme);
-
-            if (newTheme === 'dark') {
-                body.style.color = '#ffffff';
-                navbar.style.color = '#ffffff';
-                links.forEach(link => link.style.color = '#ffffff');
-                toggleBtn.classList.replace('fa-moon', 'fa-sun');
-            } else {
-                body.style.color = '#000000';
-                navbar.style.color = '#000000';
-                links.forEach(link => link.style.color = '#000000');
-                toggleBtn.classList.replace('fa-sun', 'fa-moon');
-            }
-        }
-
-        updateTheme();
-        window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', updateTheme);
-    }
 });
