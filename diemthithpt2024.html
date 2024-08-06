@@ -58,9 +58,10 @@
 
     <div class="container mt-4">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" id="rollNumber" placeholder="Số báo danh" required>
+            <input type="text" class="form-control" id="rollNumber" placeholder="Số báo danh" required pattern="\d*">
         </div>
-        <button class="btn btn-outline-success" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i> Tra cứu</button>
+        <button class="btn btn-outline-success" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i> Tra
+            cứu</button>
     </div>
 
     <div class="container mt-4">
@@ -80,6 +81,16 @@
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const rollNumberInput = document.getElementById('rollNumber');
+
+            if (rollNumberInput) {
+                rollNumberInput.addEventListener('input', function () {
+                    this.value = this.value.replace(/\D/g, '');
+                });
+            }
+        });
+
         document.getElementById('searchButton').addEventListener('click', function () {
             const rollNumber = document.getElementById('rollNumber').value;
             if (!rollNumber) {
