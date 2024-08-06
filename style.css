@@ -97,3 +97,16 @@ a {
     color: inherit;
     text-decoration: none;
 }
+
+.toggle-mode {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.5s;
+}
+
+.toggle-mode i {
+    margin: 0;
+}

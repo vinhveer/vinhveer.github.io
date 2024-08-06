@@ -5,13 +5,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const courseTableBody = document.getElementById('courseTableBody');
     const courseModalElement = document.getElementById('courseModal');
     const courseModal = courseModalElement ? new bootstrap.Modal(courseModalElement) : null;
-    const toggleBtn = document.getElementById('toggleMode');
-    const body = document.body;
-    const navbar = document.querySelector('.navbar');
-    const links = document.querySelectorAll('.navbar a, .btn-outline-success');
+    const clearAllBtn = document.getElementById('clearAll');
+    const exportExcelBtn = document.getElementById('exportExcel');
+    const printPageBtn = document.getElementById('printPage');
 
-    let courses = [];
-    let totalCredits = 0;
+    let courses = JSON.parse(localStorage.getItem('courses')) || [];
     let editingIndex = -1;
 
     if (courseForm) {
@@ -36,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 courses.push(newCourse);
             }
 
+            localStorage.setItem('courses', JSON.stringify(courses));
             updateCourseCards();
             updateAverageScores();
             courseForm.reset();
@@ -55,11 +54,12 @@ document.addEventListener('DOMContentLoaded', function () {
                         <button class="btn btn-outline-warning" onclick="editCourse(${index})"><i class="fa-solid fa-pen-to-square"></i> Chỉnh sửa</button>
                         <button class="btn btn-outline-danger" onclick="deleteCourse(${index})"><i class="fa-solid fa-trash"></i> Xoá</button>
                     </div>
-                    <h6 class="card-title">#${index + 1}</h5>
+                    <h6 class="card-title">#${index + 1}</h6>
                     <h4 class="card-title">${course.courseName}</h4>
                     <p class="card-text"><strong>Số tín chỉ:</strong> ${course.credits} </br>
                     <strong>Điểm:</strong> ${course.score} </br>
-                    <strong>Điểm chữ:</strong> ${convertScoreToLetter(course.score)}</p>
+                    <strong>Điểm chữ:</strong> ${convertScoreToLetter(course.score)} </br>
+                    <strong>Điểm hệ 4:</strong> ${convertScoreTo4Scale(course.score)}</p>
                 </div>
             `;
             courseTableBody.appendChild(card);
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateAverageScores() {
         let totalScore10 = 0;
         let totalScore4 = 0;
-        totalCredits = 0;
+        let totalCredits = 0;
 
         courses.forEach(course => {
             totalScore10 += course.score * course.credits;
@@ -82,24 +82,32 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function convertScoreTo4Scale(score) {
-        if (score >= 8.5) return 4.0;
-        if (score >= 8.0) return 3.5;
-        if (score >= 7.0) return 3.2;
-        if (score >= 6.5) return 2.5;
+        if (score >= 9) return 4.0;
+        if (score >= 8.5) return 3.7;
+        if (score >= 8) return 3.3;
+        if (score >= 7) return 3.0;
+        if (score >= 6.5) return 2.7;
+        if (score >= 6) return 2.3;
         if (score >= 5.5) return 2.0;
-        if (score >= 5.0) return 1.5;
-        if (score >= 4.0) return 1.0;
+        if (score >= 5) return 1.7;
+        if (score >= 4.5) return 1.3;
+        if (score >= 4) return 1.0;
+        if (score >= 3) return 0.7;
         return 0.0;
     }
 
     function convertScoreToLetter(score) {
-        if (score >= 8.5) return 'A';
-        if (score >= 8.0) return 'B+';
-        if (score >= 7.0) return 'B';
-        if (score >= 6.5) return 'C+';
+        if (score >= 9) return 'A';
+        if (score >= 8.5) return 'A-';
+        if (score >= 8) return 'B+';
+        if (score >= 7) return 'B';
+        if (score >= 6.5) return 'B-';
+        if (score >= 6) return 'C+';
         if (score >= 5.5) return 'C';
-        if (score >= 5.0) return 'D+';
-        if (score >= 4.0) return 'D';
+        if (score >= 5) return 'C-';
+        if (score >= 4.5) return 'D+';
+        if (score >= 4) return 'D';
+        if (score >= 3) return 'D-';
         return 'F';
     }
 
@@ -115,6 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.deleteCourse = function (index) {
         courses.splice(index, 1);
+        localStorage.setItem('courses', JSON.stringify(courses));
         updateCourseCards();
         updateAverageScores();
     };
@@ -126,4 +135,49 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('courseModalLabel').textContent = 'Thêm điểm';
         });
     }
+
+    if (clearAllBtn) {
+        clearAllBtn.addEventListener('click', function () {
+            if (confirm('Bạn có chắc chắn muốn xóa tất cả các môn học?')) {
+                courses = [];
+                localStorage.removeItem('courses');
+                updateCourseCards();
+                updateAverageScores();
+            }
+        });
+    }
+
+    if (exportExcelBtn) {
+        exportExcelBtn.addEventListener('click', function () {
+            const data = courses.map(course => ({
+                'Tên môn học': course.courseName,
+                'Tín chỉ': course.credits,
+                'Điểm': course.score,
+                'Điểm chữ': convertScoreToLetter(course.score),
+                'Điểm hệ 4': convertScoreTo4Scale(course.score)
+            }));
+
+            data.push({
+                'Tên môn học': 'Điểm trung bình',
+                'Tín chỉ': '',
+                'Điểm': averageScore10.textContent,
+                'Điểm chữ': '',
+                'Điểm hệ 4': averageScore4.textContent
+            });
+
+            const worksheet = XLSX.utils.json_to_sheet(data);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Courses');
+            XLSX.writeFile(workbook, 'Courses.xlsx');
+        });
+    }
+
+    if (printPageBtn) {
+        printPageBtn.addEventListener('click', function () {
+            window.print();
+        });
+    }
+
+    updateCourseCards();
+    updateAverageScores();
 });

@@ -45,6 +45,9 @@
                     </li>
                 </ul>
             </div>
+            <button id="toggleMode" class="btn btn-outline-secondary toggle-mode">
+                <i class="fas fa-moon"></i>
+            </button>
         </div>
     </nav>
 
@@ -87,7 +90,7 @@
             document.getElementById('loading').style.display = 'block';
             document.getElementById('result').innerHTML = '';
 
-            Papa.parse('file/diem_thi_thpt_2024.csv', {
+            Papa.parse('https://vinhveer.github.io/file/diem_thi_thpt_2024.csv', {
                 download: true,
                 header: true,
                 complete: function (results) {
@@ -110,33 +113,9 @@
                 }
             });
         });
-
-        const toggleBtn = document.getElementById('toggleMode');
-        const body = document.body;
-        const navbar = document.querySelector('.navbar');
-        const links = document.querySelectorAll('.navbar a, .btn-outline-success');
-
-        function updateTheme() {
-            const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-            const newTheme = prefersDarkScheme ? 'dark' : 'light';
-            body.setAttribute('data-bs-theme', newTheme);
-
-            if (newTheme === 'dark') {
-                body.style.color = '#ffffff';
-                navbar.style.color = '#ffffff';
-                links.forEach(link => link.style.color = '#ffffff');
-                toggleBtn.classList.replace('fa-moon', 'fa-sun');
-            } else {
-                body.style.color = '#000000';
-                navbar.style.color = '#000000';
-                links.forEach(link => link.style.color = '#000000');
-                toggleBtn.classList.replace('fa-sun', 'fa-moon');
-            }
-        }
-
-        updateTheme();
-        window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', updateTheme);
     </script>
+
+    <script src="js/toggle-mode.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
