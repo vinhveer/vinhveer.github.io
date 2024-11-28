@@ -8,19 +8,17 @@ const Navbar = () => {
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
+        <Link className="navbar-brand" to="/">Vinh Veer</Link>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link className="nav-link" to="/">Home</Link>
+              <Link className="nav-link" to="/">Trang chủ</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/about">About</Link>
+              <Link className="nav-link" to="/about">Về tôi</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/blogs">Blogs</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/features">Features</Link>
+              <Link className="nav-link" to="/blogs">Các nền tảng</Link>
             </li>
           </ul>
         </div>

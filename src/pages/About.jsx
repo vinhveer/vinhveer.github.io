@@ -2,8 +2,8 @@ import React from 'react'
 
 const About = () => {
   return (
-    <div>
-      <h3>This is About</h3>
+    <div className='container mt-4'>
+      <h3>Không có thông tin</h3>
     </div>
   )
 }
