@@ -17,7 +17,15 @@ const Blogs = () => {
         <div className="card-body">
           <h5 className="card-title">dodo E-learning Platform</h5>
           <p className="card-text">Nền tảng học trực tuyến</p>
-          <a href="http://linkedin.com/in/vinhveer" className="btn btn-primary">Truy cập ngay</a>
+          <a href="http://ec2-50-17-60-120.compute-1.amazonaws.com/" className="btn btn-primary">Truy cập ngay</a>
+        </div>
+      </div>
+
+      <div className="card mt-4">
+        <div className="card-body">
+          <h5 className="card-title">My Linkedin</h5>
+          <p className="card-text">Kết nối với tôi</p>
+          <a href="https://linkedin.com/in/vinhveer" className="btn btn-primary">Kết nối</a>
         </div>
       </div>
     </div>

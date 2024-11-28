@@ -20,6 +20,9 @@ const Navbar = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/blogs">Các nền tảng</Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/features">Tài nguyên</Link>
+            </li>
           </ul>
         </div>
       </div>
