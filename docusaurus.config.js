@@ -10,7 +10,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
+  title: 'Vinh Veer',
   tagline: 'Dinosaurs are cool',
   favicon: 'img/favicon.ico',
 
@@ -42,27 +42,15 @@ const config = {
       'classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
-        docs: {
-          sidebarPath: './sidebars.js',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-        },
+        docs: false, // Tắt tài liệu nếu không cần
         blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          // Useful options to enforce blogging best practices
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
+          showReadingTime: true, // Hiển thị thời gian đọc bài viết
+          path: 'blog', // Đường dẫn thư mục chứa blog
+          routeBasePath: 'blog', // URL cơ sở cho blog (ví dụ: /blog)
+          blogSidebarCount: 'ALL', // Hiển thị tất cả bài viết trên sidebar
+          blogSidebarTitle: 'All posts', // Tiêu đề sidebar
+          postsPerPage: 5, // Số bài viết mỗi trang
+          include: ['*.md', '*.mdx'],
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -70,33 +58,33 @@ const config = {
       }),
     ],
   ],
-
+  
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'My Site',
+        title: 'Vinh Veer',
         logo: {
           alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          src: 'img/logo.png',
         },
         items: [
+          { to: '/about-me', label: 'Về tôi', position: 'left' },
+          { to: '/blog', label: 'Blog', position: 'left' },
           {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Tutorial',
+            href: 'http://ec2-50-17-60-120.compute-1.amazonaws.com/',
+            label: 'E-Learning',
+            position: 'right',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/vinhveer',
             label: 'GitHub',
             position: 'right',
           },
         ],
-      },
+      },      
       footer: {
         style: 'dark',
         links: [
