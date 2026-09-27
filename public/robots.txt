@@ -1,4 +1,6 @@
+# Search engines and AI crawlers are welcome.
 User-agent: *
 Allow: /
 
+# Plain Markdown summary of this site for AI tools: https://nguyenquangvinh.id.vn/llms.txt
 Sitemap: https://nguyenquangvinh.id.vn/sitemap.xml

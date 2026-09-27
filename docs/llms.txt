@@ -1,0 +1,44 @@
+# Nguyen Quang Vinh
+
+> I turn ideas into working software. Software Engineer building web applications, mobile apps, AI-powered products, and everything in between. From an early idea to a working product, I can help design, build, integrate, and ship software that solves real problems.
+
+Website: https://nguyenquangvinh.id.vn/
+
+## Contact
+
+- Phone: 0367 576 135
+- Email: nguyenquangvinh300724@gmail.com
+- Facebook: https://www.facebook.com/vinhveer.9
+- GitHub: https://github.com/vinhveer
+- LinkedIn: https://www.linkedin.com/in/vinhveer/
+
+## What I can build for you
+
+- **Web Applications**: From landing pages and internal tools to full-stack platforms and complex business systems.
+- **Mobile Applications**: Cross-platform mobile experiences built around real product needs.
+- **AI & Intelligent Systems**: AI agents, automation, LLM integrations, machine learning models, and AI-powered features integrated into existing products.
+- **Custom Software**: Have an unusual problem or an idea that doesn't fit into a category? That's usually the interesting part.
+
+## Experience
+
+### Software Engineer — AI — LASAN MARINE COMPANY LIMITED
+
+Company website: https://lasanmarine.com/
+
+Building AI-powered software for the maritime engineering domain — from web applications and AI agents to specialized engineering tools.
+
+My work spans AI application development, agentic systems, web platforms, workflow automation, and domain-specific engineering software.
+
+Focus: AI Agents, LLM, Web, Automation, Engineering Tools
+
+### Software Engineer · Part-time — AAC79 PROTECH COMPANY LIMITED
+
+Company website: https://aac79.com.vn/kiem-dinh-cong-trinh/
+
+Developing software and intelligent systems for construction monitoring and digital engineering.
+
+Focus: Web, Data, AI/ML, Digital Twin
+
+## Have something in mind?
+
+Whether you have a clear specification, an early-stage idea, or simply a problem that might be solved with software — let's talk.
