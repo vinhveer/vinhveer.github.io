@@ -1,0 +1,13 @@
+{
+  "name": "Nguyen Quang Vinh",
+  "short_name": "Vinh",
+  "description": "Software Engineer building web applications, mobile apps, and AI-powered products.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    { "src": "/favicon.png", "sizes": "256x256", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
